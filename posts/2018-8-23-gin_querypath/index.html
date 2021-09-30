@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Gin框架入门03--处理简单参数和表格 | elegant lib</title>
+
+<meta name="keywords" content="" />
+<meta name="description" content="package main import ( &#34;fmt&#34; &#34;github.com/gin-gonic/gin&#34; &#34;net/http&#34; ) func main() { fmt.Printf(&#34;launch&#34;) r := gin.Default() r.GET(&#34;/user/:name/*action&#34;, GetParamPath) r.GET(&#34;/welcome&#34;,GetQueryParmeters) r.POST(&#34;/form_post&#34;,Formpost) r.Run(&#34;:9000&#34;) } func GetParamPath(c *gin.Context) { name := c.Param(&#34;name&#34;) action := c.Param(&#34;action&#34;) message := name &#43; &#34; is &#34; &#43; action c.String(http.StatusOK, message) } func GetQueryParmeters(c *gin.Context) { firstname := c.DefaultQuery(&#34;firstname&#34;, &#34;Guest&#34;) lastname := c.Query(&#34;lastname&#34;) // shortcut for c.Request.URL.Query().Get(&#34;lastname&#34;) 	c.String(http.StatusOK, &#34;Hello %s %s&#34;, firstname, lastname) } func Formpost(c *gin.Context) { message := c.">
+<meta name="author" content="">
+<link rel="canonical" href="https://elegantnice.com/posts/2018-8-23-gin_querypath/" />
+<link href="/assets/css/stylesheet.min.746a86b58bb2b052b5e4df8216510494f04f81e62c08d626150c26c69ca929da.css" integrity="sha256-dGqGtYuysFK15N&#43;CFlEElPBPgeYsCNYmFQwmxpypKdo=" rel="preload stylesheet"
+    as="style">
+
+<link rel="icon" href="https://elegantnice.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://elegantnice.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://elegantnice.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://elegantnice.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://elegantnice.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<div style="display:none">
+<script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1280380915'%3E%3C/span%3E%3Cscript src='https://v1.cnzz.com/z_stat.php%3Fid%3D1280380915' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+<meta property="og:title" content="Gin框架入门03--处理简单参数和表格" />
+<meta property="og:description" content="package main import ( &#34;fmt&#34; &#34;github.com/gin-gonic/gin&#34; &#34;net/http&#34; ) func main() { fmt.Printf(&#34;launch&#34;) r := gin.Default() r.GET(&#34;/user/:name/*action&#34;, GetParamPath) r.GET(&#34;/welcome&#34;,GetQueryParmeters) r.POST(&#34;/form_post&#34;,Formpost) r.Run(&#34;:9000&#34;) } func GetParamPath(c *gin.Context) { name := c.Param(&#34;name&#34;) action := c.Param(&#34;action&#34;) message := name &#43; &#34; is &#34; &#43; action c.String(http.StatusOK, message) } func GetQueryParmeters(c *gin.Context) { firstname := c.DefaultQuery(&#34;firstname&#34;, &#34;Guest&#34;) lastname := c.Query(&#34;lastname&#34;) // shortcut for c.Request.URL.Query().Get(&#34;lastname&#34;) 	c.String(http.StatusOK, &#34;Hello %s %s&#34;, firstname, lastname) } func Formpost(c *gin.Context) { message := c." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://elegantnice.com/posts/2018-8-23-gin_querypath/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-08-23T08:47:11&#43;01:00" />
+<meta property="article:modified_time" content="2018-08-23T08:47:11&#43;01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Gin框架入门03--处理简单参数和表格"/>
+<meta name="twitter:description" content="package main import ( &#34;fmt&#34; &#34;github.com/gin-gonic/gin&#34; &#34;net/http&#34; ) func main() { fmt.Printf(&#34;launch&#34;) r := gin.Default() r.GET(&#34;/user/:name/*action&#34;, GetParamPath) r.GET(&#34;/welcome&#34;,GetQueryParmeters) r.POST(&#34;/form_post&#34;,Formpost) r.Run(&#34;:9000&#34;) } func GetParamPath(c *gin.Context) { name := c.Param(&#34;name&#34;) action := c.Param(&#34;action&#34;) message := name &#43; &#34; is &#34; &#43; action c.String(http.StatusOK, message) } func GetQueryParmeters(c *gin.Context) { firstname := c.DefaultQuery(&#34;firstname&#34;, &#34;Guest&#34;) lastname := c.Query(&#34;lastname&#34;) // shortcut for c.Request.URL.Query().Get(&#34;lastname&#34;) 	c.String(http.StatusOK, &#34;Hello %s %s&#34;, firstname, lastname) } func Formpost(c *gin.Context) { message := c."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://elegantnice.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Gin框架入门03--处理简单参数和表格",
+      "item": "https://elegantnice.com/posts/2018-8-23-gin_querypath/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Gin框架入门03--处理简单参数和表格",
+  "name": "Gin框架入门03--处理简单参数和表格",
+  "description": "package main import ( \u0026#34;fmt\u0026#34; \u0026#34;github.com/gin-gonic/gin\u0026#34; \u0026#34;net/http\u0026#34; ) func main() { fmt.Printf(\u0026#34;launch\u0026#34;) r := gin.Default() r.GET(\u0026#34;/user/:name/*action\u0026#34;, GetParamPath) r.GET(\u0026#34;/welcome\u0026#34;,GetQueryParmeters) r.POST(\u0026#34;/form_post\u0026#34;,Formpost) r.Run(\u0026#34;:9000\u0026#34;) } func GetParamPath(c *gin.Context) { name := c.Param(\u0026#34;name\u0026#34;) action := c.Param(\u0026#34;action\u0026#34;) message := name + \u0026#34; is \u0026#34; + action c.String(http.StatusOK, message) } func GetQueryParmeters(c *gin.Context) { firstname := c.DefaultQuery(\u0026#34;firstname\u0026#34;, \u0026#34;Guest\u0026#34;) lastname := c.Query(\u0026#34;lastname\u0026#34;) // shortcut for c.Request.URL.Query().Get(\u0026#34;lastname\u0026#34;) \tc.String(http.StatusOK, \u0026#34;Hello %s %s\u0026#34;, firstname, lastname) } func Formpost(c *gin.Context) { message := c.",
+  "keywords": [
+    
+  ],
+  "articleBody": "package main import ( \"fmt\" \"github.com/gin-gonic/gin\" \"net/http\" ) func main() { fmt.Printf(\"launch\") r := gin.Default() r.GET(\"/user/:name/*action\", GetParamPath) r.GET(\"/welcome\",GetQueryParmeters) r.POST(\"/form_post\",Formpost) r.Run(\":9000\") } func GetParamPath(c *gin.Context) { name := c.Param(\"name\") action := c.Param(\"action\") message := name + \" is \" + action c.String(http.StatusOK, message) } func GetQueryParmeters(c *gin.Context) { firstname := c.DefaultQuery(\"firstname\", \"Guest\") lastname := c.Query(\"lastname\") // shortcut for c.Request.URL.Query().Get(\"lastname\") \tc.String(http.StatusOK, \"Hello %s %s\", firstname, lastname) } func Formpost(c *gin.Context) { message := c.PostForm(\"message\") nick := c.DefaultPostForm(\"nick\", \"anonymous\") c.JSON(200, gin.H{ \"status\": \"posted\", \"message\": message, \"nick\": nick, }) } 示例一：带简单参数请求 http://localhost:9000/user/mike/drink\n示例二：对请求参数设置默认值 http://localhost:9000/welcome?firstname=jack\u0026lastname=lee 请求参数为firstname，lastname http://localhost:9000/welcome?lastname=lee\n对于缺失参数firstname情况的处理示例三：处理简单表格传输 http://localhost:9000/form_post 备注：简单参数意味着只有几个参数，简单表格意味着是key-value一对一\n",
+  "wordCount" : "95",
+  "inLanguage": "en",
+  "datePublished": "2018-08-23T08:47:11+01:00",
+  "dateModified": "2018-08-23T08:47:11+01:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://elegantnice.com/posts/2018-8-23-gin_querypath/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "elegant lib",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://elegantnice.com/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+
+
+
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: #1d1e20;
+                --entry: #2e2e33;
+                --primary: rgba(255, 255, 255, 0.84);
+                --secondary: rgba(255, 255, 255, 0.56);
+                --tertiary: rgba(255, 255, 255, 0.16);
+                --content: rgba(255, 255, 255, 0.74);
+                --hljs-bg: #2e2e33;
+                --code-bg: #37383e;
+                --border: #333;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+    </style>
+
+</noscript>
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://elegantnice.com/" accesskey="h" title="elegant lib (Alt + H)">elegant lib</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+                
+            </span>
+        </div>
+        <ul id="menu" onscroll="menu_on_scroll()"></ul>
+    </nav>
+</header>
+
+    <main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+
+    <h1 class="post-title">
+      Gin框架入门03--处理简单参数和表格<div class="entry-isdraft"><sup>&nbsp;&nbsp;[draft]</sup></div>
+    </h1>
+    <div class="post-meta">August 23, 2018
+
+
+</div>
+  </header> 
+
+  <div class="post-content">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/gin-gonic/gin&#34;</span>
+	<span style="color:#e6db74">&#34;net/http&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;launch&#34;</span>)
+	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Default</span>()
+
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/user/:name/*action&#34;</span>, <span style="color:#a6e22e">GetParamPath</span>)
+
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/welcome&#34;</span>,<span style="color:#a6e22e">GetQueryParmeters</span>)
+
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">POST</span>(<span style="color:#e6db74">&#34;/form_post&#34;</span>,<span style="color:#a6e22e">Formpost</span>)
+
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#e6db74">&#34;:9000&#34;</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GetParamPath</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>)  {
+	<span style="color:#a6e22e">name</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Param</span>(<span style="color:#e6db74">&#34;name&#34;</span>)
+	<span style="color:#a6e22e">action</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Param</span>(<span style="color:#e6db74">&#34;action&#34;</span>)
+	<span style="color:#a6e22e">message</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">name</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; is &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">action</span>
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#a6e22e">message</span>)
+
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GetQueryParmeters</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>)  {
+	<span style="color:#a6e22e">firstname</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">DefaultQuery</span>(<span style="color:#e6db74">&#34;firstname&#34;</span>, <span style="color:#e6db74">&#34;Guest&#34;</span>)
+	<span style="color:#a6e22e">lastname</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Query</span>(<span style="color:#e6db74">&#34;lastname&#34;</span>) <span style="color:#75715e">// shortcut for c.Request.URL.Query().Get(&#34;lastname&#34;)
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#e6db74">&#34;Hello %s %s&#34;</span>, <span style="color:#a6e22e">firstname</span>, <span style="color:#a6e22e">lastname</span>)
+
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Formpost</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>)  {
+	<span style="color:#a6e22e">message</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">PostForm</span>(<span style="color:#e6db74">&#34;message&#34;</span>)
+	<span style="color:#a6e22e">nick</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">DefaultPostForm</span>(<span style="color:#e6db74">&#34;nick&#34;</span>, <span style="color:#e6db74">&#34;anonymous&#34;</span>)
+
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#ae81ff">200</span>, <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">H</span>{
+		<span style="color:#e6db74">&#34;status&#34;</span>:  <span style="color:#e6db74">&#34;posted&#34;</span>,
+		<span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#a6e22e">message</span>,
+		<span style="color:#e6db74">&#34;nick&#34;</span>:    <span style="color:#a6e22e">nick</span>,
+	})
+
+}
+
+</code></pre></div><h2 id="示例一带简单参数请求">示例一：带简单参数请求<a hidden class="anchor" aria-hidden="true" href="#示例一带简单参数请求">#</a></h2>
+<p>http://localhost:9000/user/mike/drink</p>
+<p><img loading="lazy" src="http://photo-elegant.oss-cn-shanghai.aliyuncs.com/18-8-25/64997062.jpg" alt=""  />
+</p>
+<h2 id="示例二对请求参数设置默认值">示例二：对请求参数设置默认值<a hidden class="anchor" aria-hidden="true" href="#示例二对请求参数设置默认值">#</a></h2>
+<p>http://localhost:9000/welcome?firstname=jack&amp;lastname=lee
+<img loading="lazy" src="http://photo-elegant.oss-cn-shanghai.aliyuncs.com/18-8-25/73457672.jpg" alt=""  />
+</p>
+<h4 id="请求参数为firstnamelastname">请求参数为firstname，lastname<a hidden class="anchor" aria-hidden="true" href="#请求参数为firstnamelastname">#</a></h4>
+<p>http://localhost:9000/welcome?lastname=lee</p>
+<p>对于缺失参数firstname情况的处理<img loading="lazy" src="http://photo-elegant.oss-cn-shanghai.aliyuncs.com/18-8-25/2179572.jpg" alt=""  />
+</p>
+<h2 id="示例三处理简单表格传输">示例三：处理简单表格传输<a hidden class="anchor" aria-hidden="true" href="#示例三处理简单表格传输">#</a></h2>
+<p>http://localhost:9000/form_post
+<img loading="lazy" src="http://photo-elegant.oss-cn-shanghai.aliyuncs.com/18-8-25/65480832.jpg" alt=""  />
+</p>
+<p>备注：简单参数意味着只有几个参数，简单表格意味着是key-value一对一</p>
+<p><img loading="lazy" src="http://photo-elegant.oss-cn-shanghai.aliyuncs.com/18-8-22/88408382.jpg" alt=""  />
+</p>
+<p><img loading="lazy" src="/img/qrcode.png" alt="微信公众号"  />
+</p>
+
+</div>
+  <footer class="post-footer">
+  </footer>
+</article>
+    </main><footer class="footer">
+    <span>&copy; 2021 <a href="https://elegantnice.com/">elegant lib</a></span>
+    <span>&middot;</span>
+    <span>Powered by <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a></span>
+    <span>&middot;</span>
+    <span>Theme <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+
+
+<script defer src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<script>
+    window.onload = function () {
+        if (localStorage.getItem("menu-scroll-position")) {
+            document.getElementById('menu').scrollLeft = localStorage.getItem("menu-scroll-position");
+        }
+    }
+
+    function menu_on_scroll() {
+        localStorage.setItem("menu-scroll-position", document.getElementById('menu').scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+</body>
+
+</html>

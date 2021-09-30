@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Gin框架入门01--Http请求Body和Header的获取 | elegant lib</title>
+
+<meta name="keywords" content="" />
+<meta name="description" content="前言 Gin是一个轻量级的Web开发框架，与重量级代表Beego的区别在于，Gin专注于Web 中Http协议处理，数据、表格解析，路由与中间件等，而Beego相对大而全，完整MVC模式，不仅包含了Web协议处理的内容，也包含了数据库的CURD(Beego光数据库的驱动都有三种 mysql/Sqlite/Postgres)
+首先对于Gin框架的安装 简要
+&gt; go get -u github.com/gin-gonic/gin &gt; Gin官方Demo Gin教程的官方入门程序 example.go
+package main import &#34;github.com/gin-gonic/gin&#34; func main() { r := gin.Default() r.GET(&#34;/ping&#34;, func(c *gin.Context) { c.JSON(200, gin.H{ &#34;message&#34;: &#34;pong&#34;, }) }) r.Run() // listen and serve on 0.0.0.0:8080 } 运行 example.go，可以通过浏览器来访问 http://localhost:8080/ping
+如果一切运行正常，那么可以看到浏览器中有Json返回
+Gin获取Http请求头Header和Body 　一个HTTP报文由3部分组成，分别是:
+　(1)、起始行(start line)
+　(2)、首部(header)
+　(3)、主体(body)
+本次主要关注的是发起请求的报文，使用Postman做为测试工具，发起Http请求
+package main import ( &#34;fmt&#34; &#34;github.com/gin-gonic/gin&#34; &#34;io/ioutil&#34; ) func main() { fmt.Printf(&#34;launch Gin&#34;) r := gin.">
+<meta name="author" content="">
+<link rel="canonical" href="https://elegantnice.com/posts/2018-8-21-gin_httpbody_n1/" />
+<link href="/assets/css/stylesheet.min.746a86b58bb2b052b5e4df8216510494f04f81e62c08d626150c26c69ca929da.css" integrity="sha256-dGqGtYuysFK15N&#43;CFlEElPBPgeYsCNYmFQwmxpypKdo=" rel="preload stylesheet"
+    as="style">
+
+<link rel="icon" href="https://elegantnice.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://elegantnice.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://elegantnice.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://elegantnice.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://elegantnice.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<div style="display:none">
+<script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1280380915'%3E%3C/span%3E%3Cscript src='https://v1.cnzz.com/z_stat.php%3Fid%3D1280380915' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+<meta property="og:title" content="Gin框架入门01--Http请求Body和Header的获取" />
+<meta property="og:description" content="前言 Gin是一个轻量级的Web开发框架，与重量级代表Beego的区别在于，Gin专注于Web 中Http协议处理，数据、表格解析，路由与中间件等，而Beego相对大而全，完整MVC模式，不仅包含了Web协议处理的内容，也包含了数据库的CURD(Beego光数据库的驱动都有三种 mysql/Sqlite/Postgres)
+首先对于Gin框架的安装 简要
+&gt; go get -u github.com/gin-gonic/gin &gt; Gin官方Demo Gin教程的官方入门程序 example.go
+package main import &#34;github.com/gin-gonic/gin&#34; func main() { r := gin.Default() r.GET(&#34;/ping&#34;, func(c *gin.Context) { c.JSON(200, gin.H{ &#34;message&#34;: &#34;pong&#34;, }) }) r.Run() // listen and serve on 0.0.0.0:8080 } 运行 example.go，可以通过浏览器来访问 http://localhost:8080/ping
+如果一切运行正常，那么可以看到浏览器中有Json返回
+Gin获取Http请求头Header和Body 　一个HTTP报文由3部分组成，分别是:
+　(1)、起始行(start line)
+　(2)、首部(header)
+　(3)、主体(body)
+本次主要关注的是发起请求的报文，使用Postman做为测试工具，发起Http请求
+package main import ( &#34;fmt&#34; &#34;github.com/gin-gonic/gin&#34; &#34;io/ioutil&#34; ) func main() { fmt.Printf(&#34;launch Gin&#34;) r := gin." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://elegantnice.com/posts/2018-8-21-gin_httpbody_n1/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-08-21T08:47:11&#43;01:00" />
+<meta property="article:modified_time" content="2018-08-21T08:47:11&#43;01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Gin框架入门01--Http请求Body和Header的获取"/>
+<meta name="twitter:description" content="前言 Gin是一个轻量级的Web开发框架，与重量级代表Beego的区别在于，Gin专注于Web 中Http协议处理，数据、表格解析，路由与中间件等，而Beego相对大而全，完整MVC模式，不仅包含了Web协议处理的内容，也包含了数据库的CURD(Beego光数据库的驱动都有三种 mysql/Sqlite/Postgres)
+首先对于Gin框架的安装 简要
+&gt; go get -u github.com/gin-gonic/gin &gt; Gin官方Demo Gin教程的官方入门程序 example.go
+package main import &#34;github.com/gin-gonic/gin&#34; func main() { r := gin.Default() r.GET(&#34;/ping&#34;, func(c *gin.Context) { c.JSON(200, gin.H{ &#34;message&#34;: &#34;pong&#34;, }) }) r.Run() // listen and serve on 0.0.0.0:8080 } 运行 example.go，可以通过浏览器来访问 http://localhost:8080/ping
+如果一切运行正常，那么可以看到浏览器中有Json返回
+Gin获取Http请求头Header和Body 　一个HTTP报文由3部分组成，分别是:
+　(1)、起始行(start line)
+　(2)、首部(header)
+　(3)、主体(body)
+本次主要关注的是发起请求的报文，使用Postman做为测试工具，发起Http请求
+package main import ( &#34;fmt&#34; &#34;github.com/gin-gonic/gin&#34; &#34;io/ioutil&#34; ) func main() { fmt.Printf(&#34;launch Gin&#34;) r := gin."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://elegantnice.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Gin框架入门01--Http请求Body和Header的获取",
+      "item": "https://elegantnice.com/posts/2018-8-21-gin_httpbody_n1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Gin框架入门01--Http请求Body和Header的获取",
+  "name": "Gin框架入门01--Http请求Body和Header的获取",
+  "description": "前言 Gin是一个轻量级的Web开发框架，与重量级代表Beego的区别在于，Gin专注于Web 中Http协议处理，数据、表格解析，路由与中间件等，而Beego相对大而全，完整MVC模式，不仅包含了Web协议处理的内容，也包含了数据库的CURD(Beego光数据库的驱动都有三种 mysql/Sqlite/Postgres)\n首先对于Gin框架的安装 简要\n\u0026gt; go get -u github.com/gin-gonic/gin \u0026gt; Gin官方Demo Gin教程的官方入门程序 example.go\npackage main import \u0026#34;github.com/gin-gonic/gin\u0026#34; func main() { r := gin.Default() r.GET(\u0026#34;/ping\u0026#34;, func(c *gin.Context) { c.JSON(200, gin.H{ \u0026#34;message\u0026#34;: \u0026#34;pong\u0026#34;, }) }) r.Run() // listen and serve on 0.0.0.0:8080 } 运行 example.go，可以通过浏览器来访问 http://localhost:8080/ping\n如果一切运行正常，那么可以看到浏览器中有Json返回\nGin获取Http请求头Header和Body 　一个HTTP报文由3部分组成，分别是:\n　(1)、起始行(start line)\n　(2)、首部(header)\n　(3)、主体(body)\n本次主要关注的是发起请求的报文，使用Postman做为测试工具，发起Http请求\npackage main import ( \u0026#34;fmt\u0026#34; \u0026#34;github.com/gin-gonic/gin\u0026#34; \u0026#34;io/ioutil\u0026#34; ) func main() { fmt.Printf(\u0026#34;launch Gin\u0026#34;) r := gin.",
+  "keywords": [
+    
+  ],
+  "articleBody": "前言 Gin是一个轻量级的Web开发框架，与重量级代表Beego的区别在于，Gin专注于Web 中Http协议处理，数据、表格解析，路由与中间件等，而Beego相对大而全，完整MVC模式，不仅包含了Web协议处理的内容，也包含了数据库的CURD(Beego光数据库的驱动都有三种 mysql/Sqlite/Postgres)\n首先对于Gin框架的安装 简要\n go get -u github.com/gin-gonic/gin  Gin官方Demo Gin教程的官方入门程序 example.go\npackage main import \"github.com/gin-gonic/gin\" func main() { r := gin.Default() r.GET(\"/ping\", func(c *gin.Context) { c.JSON(200, gin.H{ \"message\": \"pong\", }) }) r.Run() // listen and serve on 0.0.0.0:8080 } 运行 example.go，可以通过浏览器来访问 http://localhost:8080/ping\n如果一切运行正常，那么可以看到浏览器中有Json返回\nGin获取Http请求头Header和Body 　一个HTTP报文由3部分组成，分别是:\n　(1)、起始行(start line)\n　(2)、首部(header)\n　(3)、主体(body)\n本次主要关注的是发起请求的报文，使用Postman做为测试工具，发起Http请求\npackage main import ( \"fmt\" \"github.com/gin-gonic/gin\" \"io/ioutil\" ) func main() { fmt.Printf(\"launch Gin\") r := gin.Default() r.GET(\"/get\",HandleGet) r.POST(\"/getall\",HandleGetAllData) //如果使用浏览器调试，那么响应Get方法 \t//r.GET(\"/getall\",HandleGetAllData) \tr.Run(\":9000\") } func HandleGet(c *gin.Context) { c.JSON(200,gin.H{ \"receive\":\"65536\", }) } func HandleGetAllData(c *gin.Context) { //log.Print(\"handle log\") \tbody,_ := ioutil.ReadAll(c.Request.Body) fmt.Println(\"---body/--- \\r\\n \"+string(body)) fmt.Println(\"---header/--- \\r\\n\") for k,v :=range c.Request.Header { fmt.Println(k,v) } //fmt.Println(\"header \\r\\n\",c.Request.Header)  c.JSON(200,gin.H{ \"receive\":\"1024\", }) } 运行示例：\npostman请求内容\n Method：post\n  Body type: raw\n  Body: username=123\n 其中红色框内为HTTP Request Body\n橙色框内为 HTTP Request Header\n",
+  "wordCount" : "126",
+  "inLanguage": "en",
+  "datePublished": "2018-08-21T08:47:11+01:00",
+  "dateModified": "2018-08-21T08:47:11+01:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://elegantnice.com/posts/2018-8-21-gin_httpbody_n1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "elegant lib",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://elegantnice.com/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+
+
+
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: #1d1e20;
+                --entry: #2e2e33;
+                --primary: rgba(255, 255, 255, 0.84);
+                --secondary: rgba(255, 255, 255, 0.56);
+                --tertiary: rgba(255, 255, 255, 0.16);
+                --content: rgba(255, 255, 255, 0.74);
+                --hljs-bg: #2e2e33;
+                --code-bg: #37383e;
+                --border: #333;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+    </style>
+
+</noscript>
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://elegantnice.com/" accesskey="h" title="elegant lib (Alt + H)">elegant lib</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+                
+            </span>
+        </div>
+        <ul id="menu" onscroll="menu_on_scroll()"></ul>
+    </nav>
+</header>
+
+    <main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+
+    <h1 class="post-title">
+      Gin框架入门01--Http请求Body和Header的获取<div class="entry-isdraft"><sup>&nbsp;&nbsp;[draft]</sup></div>
+    </h1>
+    <div class="post-meta">August 21, 2018
+
+
+</div>
+  </header> 
+
+  <div class="post-content">
+<h2 id="前言">前言<a hidden class="anchor" aria-hidden="true" href="#前言">#</a></h2>
+<p>Gin是一个轻量级的Web开发框架，与重量级代表Beego的区别在于，Gin专注于Web 中Http协议处理，数据、表格解析，路由与中间件等，而Beego相对大而全，完整MVC模式，不仅包含了Web协议处理的内容，也包含了数据库的CURD(Beego光数据库的驱动都有三种 mysql/Sqlite/Postgres)</p>
+<p>首先对于Gin框架的安装 简要</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; go get -u github.com/gin-gonic/gin
+&gt; 
+</code></pre></div><h2 id="gin官方demo">Gin官方Demo<a hidden class="anchor" aria-hidden="true" href="#gin官方demo">#</a></h2>
+<p>Gin教程的官方入门程序 example.go</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/gin-gonic/gin&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Default</span>()
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/ping&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#ae81ff">200</span>, <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">H</span>{
+			<span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;pong&#34;</span>,
+		})
+	})
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Run</span>() <span style="color:#75715e">// listen and serve on 0.0.0.0:8080
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>运行 example.go，可以通过浏览器来访问   http://localhost:8080/ping</p>
+<p>如果一切运行正常，那么可以看到浏览器中有Json返回</p>
+<h2 id="gin获取http请求头header和body">Gin获取Http请求头Header和Body<a hidden class="anchor" aria-hidden="true" href="#gin获取http请求头header和body">#</a></h2>
+<p>　　一个HTTP报文由3部分组成，分别是:</p>
+<p>　　(1)、起始行(start line)</p>
+<p>　　(2)、首部(header)</p>
+<p>　　(3)、主体(body)</p>
+<p>本次主要关注的是发起请求的报文，使用Postman做为测试工具，发起Http请求</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/gin-gonic/gin&#34;</span>
+	<span style="color:#e6db74">&#34;io/ioutil&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;launch Gin&#34;</span>)
+
+	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Default</span>()
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/get&#34;</span>,<span style="color:#a6e22e">HandleGet</span>)
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">POST</span>(<span style="color:#e6db74">&#34;/getall&#34;</span>,<span style="color:#a6e22e">HandleGetAllData</span>)
+	
+	<span style="color:#75715e">//如果使用浏览器调试，那么响应Get方法
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//r.GET(&#34;/getall&#34;,HandleGetAllData)
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#e6db74">&#34;:9000&#34;</span>)
+	
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">HandleGet</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>)  {
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#ae81ff">200</span>,<span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">H</span>{
+		<span style="color:#e6db74">&#34;receive&#34;</span>:<span style="color:#e6db74">&#34;65536&#34;</span>,
+	})
+
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">HandleGetAllData</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>)  {
+   <span style="color:#75715e">//log.Print(&#34;handle log&#34;)
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">body</span>,<span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Request</span>.<span style="color:#a6e22e">Body</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;---body/--- \r\n &#34;</span><span style="color:#f92672">+</span>string(<span style="color:#a6e22e">body</span>))
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;---header/--- \r\n&#34;</span>)
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">k</span>,<span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span><span style="color:#66d9ef">range</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Request</span>.<span style="color:#a6e22e">Header</span> {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">k</span>,<span style="color:#a6e22e">v</span>)
+	}
+	<span style="color:#75715e">//fmt.Println(&#34;header \r\n&#34;,c.Request.Header)
+</span><span style="color:#75715e"></span>
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#ae81ff">200</span>,<span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">H</span>{
+		<span style="color:#e6db74">&#34;receive&#34;</span>:<span style="color:#e6db74">&#34;1024&#34;</span>,
+	})
+
+}
+
+</code></pre></div><p>运行示例：</p>
+<p>postman请求内容</p>
+<blockquote>
+<p>Method：post</p>
+</blockquote>
+<blockquote>
+<p>Body type: raw</p>
+</blockquote>
+<blockquote>
+<p>Body: username=123</p>
+</blockquote>
+<p><img loading="lazy" src="http://photo-elegant.oss-cn-shanghai.aliyuncs.com/18-8-21/86828159.jpg" alt=""  />
+</p>
+<p>其中红色框内为HTTP  Request Body</p>
+<p>橙色框内为 HTTP  Request Header</p>
+<p><img loading="lazy" src="/img/qrcode.png" alt="微信公众号"  />
+</p>
+
+</div>
+  <footer class="post-footer">
+  </footer>
+</article>
+    </main><footer class="footer">
+    <span>&copy; 2021 <a href="https://elegantnice.com/">elegant lib</a></span>
+    <span>&middot;</span>
+    <span>Powered by <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a></span>
+    <span>&middot;</span>
+    <span>Theme <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+
+
+<script defer src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<script>
+    window.onload = function () {
+        if (localStorage.getItem("menu-scroll-position")) {
+            document.getElementById('menu').scrollLeft = localStorage.getItem("menu-scroll-position");
+        }
+    }
+
+    function menu_on_scroll() {
+        localStorage.setItem("menu-scroll-position", document.getElementById('menu').scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+</body>
+
+</html>

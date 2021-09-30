@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>elegant lib</title>
+    <link>https://elegantnice.com/</link>
+    <description>Recent content on elegant lib</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 23 Aug 2018 08:47:11 +0100</lastBuildDate><atom:link href="https://elegantnice.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gin框架入门03--处理简单参数和表格</title>
+      <link>https://elegantnice.com/posts/2018-8-23-gin_querypath/</link>
+      <pubDate>Thu, 23 Aug 2018 08:47:11 +0100</pubDate>
+      
+      <guid>https://elegantnice.com/posts/2018-8-23-gin_querypath/</guid>
+      <description>package main import ( &amp;#34;fmt&amp;#34; &amp;#34;github.com/gin-gonic/gin&amp;#34; &amp;#34;net/http&amp;#34; ) func main() { fmt.Printf(&amp;#34;launch&amp;#34;) r := gin.Default() r.GET(&amp;#34;/user/:name/*action&amp;#34;, GetParamPath) r.GET(&amp;#34;/welcome&amp;#34;,GetQueryParmeters) r.POST(&amp;#34;/form_post&amp;#34;,Formpost) r.Run(&amp;#34;:9000&amp;#34;) } func GetParamPath(c *gin.Context) { name := c.Param(&amp;#34;name&amp;#34;) action := c.Param(&amp;#34;action&amp;#34;) message := name + &amp;#34; is &amp;#34; + action c.String(http.StatusOK, message) } func GetQueryParmeters(c *gin.Context) { firstname := c.DefaultQuery(&amp;#34;firstname&amp;#34;, &amp;#34;Guest&amp;#34;) lastname := c.Query(&amp;#34;lastname&amp;#34;) // shortcut for c.Request.URL.Query().Get(&amp;#34;lastname&amp;#34;) 	c.String(http.StatusOK, &amp;#34;Hello %s %s&amp;#34;, firstname, lastname) } func Formpost(c *gin.Context) { message := c.</description>
+    </item>
+    
+    <item>
+      <title>Gin框架入门02--HTTP常用请求方法示例</title>
+      <link>https://elegantnice.com/posts/2018-8-22-gin_posthead_n2/</link>
+      <pubDate>Wed, 22 Aug 2018 08:47:11 +0100</pubDate>
+      
+      <guid>https://elegantnice.com/posts/2018-8-22-gin_posthead_n2/</guid>
+      <description>HTTP HTTP协议最常用的方法是Get方法和Post方法，任何一个了解过Web开发的程序员，都耳熟能详，那么还有哪些方法是HTTP协议支持的呢？
+  GET 请求获取Request-URI所标识的资源
+  POST 在Request-URI所标识的资源后附加新的数据
+  HEAD 请求获取由Request-URI所标识的资源的响应消息报头
+  PUT 请求服务器存储一个资源，并用Request-URI作为其标识
+  DELETE 请求服务器删除Request-URI所标识的资源
+  OPTIONS 请求查询服务器的性能，或者查询与资源相关的选项和需求
+  RESTful 架构中使用了四种HTTP方法作为对资源(URI)的操作
+   方法名称 含义     GET 获取资源   POST 新建资源（也可以用于更新资源)   PUT 更新资源   DELETE 用来删除资源    使用Gin框架实现响应常见HTTP方法的示例
+package main import ( &amp;#34;github.com/gin-gonic/gin&amp;#34; &amp;#34;net/http&amp;#34; &amp;#34;io/ioutil&amp;#34; &amp;#34;fmt&amp;#34; ) func main() { r := gin.</description>
+    </item>
+    
+    <item>
+      <title>Gin框架入门01--Http请求Body和Header的获取</title>
+      <link>https://elegantnice.com/posts/2018-8-21-gin_httpbody_n1/</link>
+      <pubDate>Tue, 21 Aug 2018 08:47:11 +0100</pubDate>
+      
+      <guid>https://elegantnice.com/posts/2018-8-21-gin_httpbody_n1/</guid>
+      <description>前言 Gin是一个轻量级的Web开发框架，与重量级代表Beego的区别在于，Gin专注于Web 中Http协议处理，数据、表格解析，路由与中间件等，而Beego相对大而全，完整MVC模式，不仅包含了Web协议处理的内容，也包含了数据库的CURD(Beego光数据库的驱动都有三种 mysql/Sqlite/Postgres)
+首先对于Gin框架的安装 简要
+&amp;gt; go get -u github.com/gin-gonic/gin &amp;gt; Gin官方Demo Gin教程的官方入门程序 example.go
+package main import &amp;#34;github.com/gin-gonic/gin&amp;#34; func main() { r := gin.Default() r.GET(&amp;#34;/ping&amp;#34;, func(c *gin.Context) { c.JSON(200, gin.H{ &amp;#34;message&amp;#34;: &amp;#34;pong&amp;#34;, }) }) r.Run() // listen and serve on 0.0.0.0:8080 } 运行 example.go，可以通过浏览器来访问 http://localhost:8080/ping
+如果一切运行正常，那么可以看到浏览器中有Json返回
+Gin获取Http请求头Header和Body 　一个HTTP报文由3部分组成，分别是:
+　(1)、起始行(start line)
+　(2)、首部(header)
+　(3)、主体(body)
+本次主要关注的是发起请求的报文，使用Postman做为测试工具，发起Http请求
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;github.com/gin-gonic/gin&amp;#34; &amp;#34;io/ioutil&amp;#34; ) func main() { fmt.Printf(&amp;#34;launch Gin&amp;#34;) r := gin.</description>
+    </item>
+    
+    <item>
+      <title>轻量级数据库Sqlite3基础使用</title>
+      <link>https://elegantnice.com/posts/2018-3-6-rabbitmq_python_go/</link>
+      <pubDate>Tue, 06 Mar 2018 08:47:11 +0100</pubDate>
+      
+      <guid>https://elegantnice.com/posts/2018-3-6-rabbitmq_python_go/</guid>
+      <description>#前言 本文代码主要参考 RabbitMQ官方demo RabbitMQ Tutorials
+其中发送消息使用 python,接收消息使用go
+基本条件： | 类型|	名称 | 内容	| |:&amp;mdash;: |:&amp;mdash;-:|:&amp;mdash; : | |Operate System|Ubuntu | 16.04| |Message Queue|RabbitMQ| 3.6.15| |MQ Host| http address|192.168.105.132| |MQ User| admin| 123456|
+##发送消息 使用 pyhon RabbitMQ库为pika 首先使用 python pip工具安装pika
+ pip intsall pika
+ 显示已经安装软件
+ pip list
+ 完整源码sendmq.py
+import pika connection = pika.BlockingConnection(pika.ConnectionParameters(&amp;#39;localhost&amp;#39;)) channel = connection.channel() channel.queue_declare(queue=&amp;#39;hello&amp;#39;) channel.basic_publish(exchange=&amp;#39;&amp;#39;, routing_key=&amp;#39;hello&amp;#39;, body=&amp;#39;Hello World!&amp;#39;) print(&amp;#34; [x] Sent &amp;#39;Hello World!&amp;#39;&amp;#34;) connection.close() ##接收消息 笔者go运行环境在window 系统中 使用go RabbitMQku 为 Go amqp client 运行go安装</description>
+    </item>
+    
+    <item>
+      <title>linode 服务器延迟测试powershell脚本</title>
+      <link>https://elegantnice.com/posts/2018-3-1-powershell_linode/</link>
+      <pubDate>Thu, 01 Mar 2018 08:47:11 +0100</pubDate>
+      
+      <guid>https://elegantnice.com/posts/2018-3-1-powershell_linode/</guid>
+      <description>有个需求需要测试一下linode不同节点的服务器延迟大小，如果每次手工输命令测试，那效率太低。因此做一个简单的脚本 来测试不同节点的网络延迟
+linode speed test
+完整代码如下
+ping speedtest.newark.linode.com	-n 10 |Out-File &amp;quot;C:\linode.txt&amp;quot; ping speedtest.atlanta.linode.com	-n 10 |Out-File &amp;quot;C:\linode.txt&amp;quot; ping speedtest.dallas.linode.com	-n 10 |Out-File &amp;quot;C:\linode.txt&amp;quot; ping speedtest.fremont.linode.com	-n 10 |Out-File &amp;quot;C:\linode.txt&amp;quot; ping speedtest.frankfurt.linode.com	-n 10 |Out-File &amp;quot;C:\linode.txt&amp;quot; ping speedtest.london.linode.com	-n 10 |Out-File &amp;quot;C:\linode.txt&amp;quot; ping speedtest.singapore.linode.com	-n 10 |Out-File &amp;quot;C:\linode.txt&amp;quot;  主要功能是 ping 一个主机看 返回延时数据，同时把数据保存到txt文本
+某次测试结果如下：
+正在 Ping speedtest.frankfurt.linode.com [139.162.130.8] 具有 32 字节的数据: 来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52 来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52 来自 139.</description>
+    </item>
+    
+    <item>
+      <title>QT制作TCPserver完成十六进制数据收发</title>
+      <link>https://elegantnice.com/posts/2018-2-7-qtfortcpserver/</link>
+      <pubDate>Mon, 05 Feb 2018 08:47:11 +0100</pubDate>
+      
+      <guid>https://elegantnice.com/posts/2018-2-7-qtfortcpserver/</guid>
+      <description>定时发送固定的十六进制字符串</description>
+    </item>
+    
+    <item>
+      <title>轻量级数据库Sqlite3基础使用</title>
+      <link>https://elegantnice.com/posts/2017-9-10-sqlite3demo/</link>
+      <pubDate>Sun, 20 Nov 2016 08:47:11 +0100</pubDate>
+      
+      <guid>https://elegantnice.com/posts/2017-9-10-sqlite3demo/</guid>
+      <description>SQLite3本地数据库 c示例</description>
+    </item>
+    
+  </channel>
+</rss>

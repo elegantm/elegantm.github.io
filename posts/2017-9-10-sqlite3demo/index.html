@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>轻量级数据库Sqlite3基础使用 | elegant lib</title>
+
+<meta name="keywords" content="SQLite3, c" />
+<meta name="description" content="SQLite3本地数据库 c示例">
+<meta name="author" content="">
+<link rel="canonical" href="https://elegantnice.com/posts/2017-9-10-sqlite3demo/" />
+<link href="/assets/css/stylesheet.min.746a86b58bb2b052b5e4df8216510494f04f81e62c08d626150c26c69ca929da.css" integrity="sha256-dGqGtYuysFK15N&#43;CFlEElPBPgeYsCNYmFQwmxpypKdo=" rel="preload stylesheet"
+    as="style">
+
+<link rel="icon" href="https://elegantnice.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://elegantnice.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://elegantnice.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://elegantnice.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://elegantnice.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<div style="display:none">
+<script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1280380915'%3E%3C/span%3E%3Cscript src='https://v1.cnzz.com/z_stat.php%3Fid%3D1280380915' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+<meta property="og:title" content="轻量级数据库Sqlite3基础使用" />
+<meta property="og:description" content="SQLite3本地数据库 c示例" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://elegantnice.com/posts/2017-9-10-sqlite3demo/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2016-11-20T08:47:11&#43;01:00" />
+<meta property="article:modified_time" content="2016-11-20T08:47:11&#43;01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="轻量级数据库Sqlite3基础使用"/>
+<meta name="twitter:description" content="SQLite3本地数据库 c示例"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://elegantnice.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "轻量级数据库Sqlite3基础使用",
+      "item": "https://elegantnice.com/posts/2017-9-10-sqlite3demo/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "轻量级数据库Sqlite3基础使用",
+  "name": "轻量级数据库Sqlite3基础使用",
+  "description": "SQLite3本地数据库 c示例",
+  "keywords": [
+    "SQLite3", "c"
+  ],
+  "articleBody": "使用SQLite3本地数据库，运行一个demo,记录一下配置与运行结果。SQLite数据库广泛用于嵌入式系 统、桌面软件等作为本地数据库\n本文有参考网络Blog完成\n#准备工作 1、新建工程，内容如下 2、配置库目录 lib目录 #源码\n#include #include \"sqlite3.h\" #define _DEBUG_ 1P  using namespace std; int main(int argc, char* argv[]) { sqlite3 *db = NULL; char *zErrMsg = 0; int rc; rc = sqlite3_open(\"mydemo.db\", \u0026db); //打开指定的数据库文件,如果不存在将创建一个同名的数据库文件 \tif (rc) { cout  stderr  \"Can't open database: \"  sqlite3_errmsg(db)  endl; sqlite3_close(db); return (1); } else cout\"create or open Sqlite3 sucess\" endl; //创建表 TABLE ，字段有:ID,SensorID ,SiteNum ,Time, SensorParameter \tchar *sql = \" CREATE TABLE SensorData(ID INTEGER PRIMARY KEY,SensorID INTEGER,SiteNum INTEGER,Time VARCHAR(12),SensorParameter REAL);\"; sqlite3_exec(db, sql, 0, 0, \u0026zErrMsg); //插入数据 \tsql = \"INSERT INTO SensorData VALUES(NULL , 4 , 1 , '201602011203', 18.9 );\"; sqlite3_exec(db, sql, 0, 0, \u0026zErrMsg); sql = \"INSERT INTO SensorData VALUES(NULL , 24 , 40 , '201602011303', 16.4 );\"; sqlite3_exec(db, sql, 0, 0, \u0026zErrMsg); sql = \"INSERT INTO SensorData VALUES(NULL , 34 , 15 , '201602011308', 15.4 );\"; sqlite3_exec(db, sql, 0, 0, \u0026zErrMsg); int nrow = 0, ncolumn = 0; char **azResult; //二维数组存放结果  //查询数据 \tsql = \"SELECT * FROM SensorData \"; sqlite3_get_table(db, sql, \u0026azResult, \u0026nrow, \u0026ncolumn, \u0026zErrMsg); int i = 0; printf(\"row:%d column=%d \", nrow, ncolumn); printf(\" The result of querying is : \\r\\n\"); for (i = 0; i  (nrow + 1) * ncolumn; i++) printf(\"azResult[%d] = %s \\r\\n\", i, azResult[i]); //删除数据 \tsql = \"DELETE FROM SensorData WHERE SensorID =0 ;\"; sqlite3_exec(db, sql, 0, 0, \u0026zErrMsg); #ifdef _DEBUG_ \tprintf(\"zErrMsg = %s \", zErrMsg); #endif \tsql = \"SELECT * FROM SensorData \"; sqlite3_get_table(db, sql, \u0026azResult, \u0026nrow, \u0026ncolumn, \u0026zErrMsg); printf(\" row:%d column=%d \", nrow, ncolumn); printf(\" After deleting , the result of querying is : \"); for (i = 0; i  (nrow + 1) * ncolumn; i++) printf(\"azResult[%d] = %s \\r\\n\", i, azResult[i]); //释放掉 azResult 的内存空间 \tsqlite3_free_table(azResult); #ifdef _DEBUG_ \tprintf(\"zErrMsg = %s \", zErrMsg); #endif  sqlite3_close(db); //关闭数据库  system(\"pause\"); return 0; } #问题处理 1、编译不成功，主要是配置问题 注意根目录下放着 sqlite3.dll 其中lib文件夹下有sqlite3.lib\n2、注意使用debug x86模式，笔者编译工程时候，工程默认为x64 编译不通过， 错误提示为link 2019 slqlite3的函数未定义\n工程已经上传github 选择chapter1工程\n",
+  "wordCount" : "308",
+  "inLanguage": "en",
+  "datePublished": "2016-11-20T08:47:11+01:00",
+  "dateModified": "2016-11-20T08:47:11+01:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://elegantnice.com/posts/2017-9-10-sqlite3demo/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "elegant lib",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://elegantnice.com/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+
+
+
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: #1d1e20;
+                --entry: #2e2e33;
+                --primary: rgba(255, 255, 255, 0.84);
+                --secondary: rgba(255, 255, 255, 0.56);
+                --tertiary: rgba(255, 255, 255, 0.16);
+                --content: rgba(255, 255, 255, 0.74);
+                --hljs-bg: #2e2e33;
+                --code-bg: #37383e;
+                --border: #333;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+    </style>
+
+</noscript>
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://elegantnice.com/" accesskey="h" title="elegant lib (Alt + H)">elegant lib</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+                
+            </span>
+        </div>
+        <ul id="menu" onscroll="menu_on_scroll()"></ul>
+    </nav>
+</header>
+
+    <main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+
+    <h1 class="post-title">
+      轻量级数据库Sqlite3基础使用<div class="entry-isdraft"><sup>&nbsp;&nbsp;[draft]</sup></div>
+    </h1>
+    <div class="post-description">
+      SQLite3本地数据库 c示例
+    </div>
+    <div class="post-meta">November 20, 2016
+
+
+</div>
+  </header> 
+
+  <div class="post-content">
+<p><strong>使用SQLite3本地数据库，运行一个demo,记录一下配置与运行结果。SQLite数据库广泛用于嵌入式系 统、桌面软件等作为本地数据库</strong></p>
+<p>本文有参考网络Blog完成</p>
+<p>#准备工作
+1、新建工程，内容如下
+<img loading="lazy" src="http://img.blog.csdn.net/20171123110415952?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RhcmVsZWdhbnQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"  />
+
+2、配置库目录 lib目录
+<img loading="lazy" src="http://img.blog.csdn.net/20171123110508837?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RhcmVsZWdhbnQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"  />
+
+<img loading="lazy" src="http://img.blog.csdn.net/20171123110453848?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RhcmVsZWdhbnQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"  />
+</p>
+<p>#源码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;sqlite3.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define _DEBUG_ 1P
+</span><span style="color:#75715e"></span>
+using namespace std;
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> argv[])
+{
+	
+	sqlite3 <span style="color:#f92672">*</span>db <span style="color:#f92672">=</span> NULL;
+	<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>zErrMsg <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+	<span style="color:#66d9ef">int</span> rc;
+	rc <span style="color:#f92672">=</span> sqlite3_open(<span style="color:#e6db74">&#34;mydemo.db&#34;</span>, <span style="color:#f92672">&amp;</span>db); <span style="color:#75715e">//打开指定的数据库文件,如果不存在将创建一个同名的数据库文件
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> (rc)
+	{
+		
+		cout <span style="color:#f92672">&lt;&lt;</span> stderr <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Can&#39;t open database: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> sqlite3_errmsg(db) <span style="color:#f92672">&lt;&lt;</span> endl;
+		sqlite3_close(db);
+		<span style="color:#66d9ef">return</span> (<span style="color:#ae81ff">1</span>);
+	}
+	<span style="color:#66d9ef">else</span> 
+		cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;create or open Sqlite3 sucess&#34;</span> <span style="color:#f92672">&lt;&lt;</span>endl;
+	
+	<span style="color:#75715e">//创建表  TABLE ，字段有:ID,SensorID ,SiteNum ,Time, SensorParameter
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34; CREATE TABLE SensorData(ID INTEGER PRIMARY KEY,SensorID INTEGER,SiteNum INTEGER,Time VARCHAR(12),SensorParameter REAL);&#34;</span>;
+	sqlite3_exec(db, sql, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">&amp;</span>zErrMsg);
+
+
+	<span style="color:#75715e">//插入数据 
+</span><span style="color:#75715e"></span>	sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INSERT INTO SensorData VALUES(NULL , 4 , 1 , &#39;201602011203&#39;, 18.9 );&#34;</span>;
+	sqlite3_exec(db, sql, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">&amp;</span>zErrMsg);
+
+	sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INSERT INTO SensorData VALUES(NULL , 24 , 40 , &#39;201602011303&#39;, 16.4 );&#34;</span>;
+	sqlite3_exec(db, sql, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">&amp;</span>zErrMsg);
+
+	sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INSERT INTO SensorData VALUES(NULL , 34 , 15 , &#39;201602011308&#39;, 15.4 );&#34;</span>;
+	sqlite3_exec(db, sql, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">&amp;</span>zErrMsg);
+
+
+	<span style="color:#66d9ef">int</span> nrow <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, ncolumn <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>azResult; <span style="color:#75715e">//二维数组存放结果
+</span><span style="color:#75715e"></span>
+	<span style="color:#75715e">//查询数据
+</span><span style="color:#75715e"></span>	sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT * FROM SensorData &#34;</span>;
+	sqlite3_get_table(db, sql, <span style="color:#f92672">&amp;</span>azResult, <span style="color:#f92672">&amp;</span>nrow, <span style="color:#f92672">&amp;</span>ncolumn, <span style="color:#f92672">&amp;</span>zErrMsg);
+	<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	printf(<span style="color:#e6db74">&#34;row:%d column=%d  &#34;</span>, nrow, ncolumn);
+	printf(<span style="color:#e6db74">&#34; The result of querying is :  </span><span style="color:#ae81ff">\r\n</span><span style="color:#e6db74">&#34;</span>);
+	<span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> (nrow <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> ncolumn; i<span style="color:#f92672">++</span>)
+		printf(<span style="color:#e6db74">&#34;azResult[%d] = %s  </span><span style="color:#ae81ff">\r\n</span><span style="color:#e6db74">&#34;</span>, i, azResult[i]);
+
+	<span style="color:#75715e">//删除数据
+</span><span style="color:#75715e"></span>	sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;DELETE FROM SensorData WHERE SensorID =0 ;&#34;</span>;
+	sqlite3_exec(db, sql, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">&amp;</span>zErrMsg);
+
+
+<span style="color:#75715e">#ifdef _DEBUG_
+</span><span style="color:#75715e"></span>	printf(<span style="color:#e6db74">&#34;zErrMsg = %s  &#34;</span>, zErrMsg);
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>	sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT * FROM SensorData &#34;</span>;
+	sqlite3_get_table(db, sql, <span style="color:#f92672">&amp;</span>azResult, <span style="color:#f92672">&amp;</span>nrow, <span style="color:#f92672">&amp;</span>ncolumn, <span style="color:#f92672">&amp;</span>zErrMsg);
+	printf(<span style="color:#e6db74">&#34; row:%d column=%d &#34;</span>, nrow, ncolumn);
+	printf(<span style="color:#e6db74">&#34; After deleting , the result of querying is :  &#34;</span>);
+	<span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> (nrow <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> ncolumn; i<span style="color:#f92672">++</span>)
+		printf(<span style="color:#e6db74">&#34;azResult[%d] = %s </span><span style="color:#ae81ff">\r\n</span><span style="color:#e6db74">&#34;</span>, i, azResult[i]);
+
+
+	<span style="color:#75715e">//释放掉 azResult 的内存空间
+</span><span style="color:#75715e"></span>	sqlite3_free_table(azResult);
+
+<span style="color:#75715e">#ifdef _DEBUG_
+</span><span style="color:#75715e"></span>	printf(<span style="color:#e6db74">&#34;zErrMsg = %s  &#34;</span>, zErrMsg);
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+	sqlite3_close(db); <span style="color:#75715e">//关闭数据库
+</span><span style="color:#75715e"></span>
+
+
+	system(<span style="color:#e6db74">&#34;pause&#34;</span>);
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>#问题处理
+1、编译不成功，主要是配置问题
+<img loading="lazy" src="http://img.blog.csdn.net/20171123110731523?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RhcmVsZWdhbnQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"  />
+
+注意根目录下放着 sqlite3.dll
+其中lib文件夹下有sqlite3.lib</p>
+<p>2、注意使用debug x86模式，笔者编译工程时候，工程默认为x64 编译不通过，
+错误提示为link 2019 slqlite3的函数未定义</p>
+<p>工程已经上传github
+<a href="https://github.com/Elegant2011/ElegantBlog/tree/master/chapter1/SqliteDemo" title="选择chapter1工程">选择chapter1工程</a></p>
+<p><img loading="lazy" src="/img/qrcode.png" alt="微信公众号"  />
+</p>
+
+</div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://elegantnice.com/tags/sqlite3/">SQLite3</a></li>
+      <li><a href="https://elegantnice.com/tags/c/">c</a></li>
+    </ul>
+  </footer>
+</article>
+    </main><footer class="footer">
+    <span>&copy; 2021 <a href="https://elegantnice.com/">elegant lib</a></span>
+    <span>&middot;</span>
+    <span>Powered by <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a></span>
+    <span>&middot;</span>
+    <span>Theme <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+
+
+<script defer src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<script>
+    window.onload = function () {
+        if (localStorage.getItem("menu-scroll-position")) {
+            document.getElementById('menu').scrollLeft = localStorage.getItem("menu-scroll-position");
+        }
+    }
+
+    function menu_on_scroll() {
+        localStorage.setItem("menu-scroll-position", document.getElementById('menu').scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+</body>
+
+</html>

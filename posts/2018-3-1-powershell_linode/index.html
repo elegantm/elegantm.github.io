@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>linode 服务器延迟测试powershell脚本 | elegant lib</title>
+
+<meta name="keywords" content="" />
+<meta name="description" content="有个需求需要测试一下linode不同节点的服务器延迟大小，如果每次手工输命令测试，那效率太低。因此做一个简单的脚本 来测试不同节点的网络延迟
+linode speed test
+完整代码如下
+ping speedtest.newark.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.atlanta.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.dallas.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.fremont.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.frankfurt.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.london.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.singapore.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot;  主要功能是 ping 一个主机看 返回延时数据，同时把数据保存到txt文本
+某次测试结果如下：
+正在 Ping speedtest.frankfurt.linode.com [139.162.130.8] 具有 32 字节的数据: 来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52 来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52 来自 139.">
+<meta name="author" content="">
+<link rel="canonical" href="https://elegantnice.com/posts/2018-3-1-powershell_linode/" />
+<link href="/assets/css/stylesheet.min.746a86b58bb2b052b5e4df8216510494f04f81e62c08d626150c26c69ca929da.css" integrity="sha256-dGqGtYuysFK15N&#43;CFlEElPBPgeYsCNYmFQwmxpypKdo=" rel="preload stylesheet"
+    as="style">
+
+<link rel="icon" href="https://elegantnice.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://elegantnice.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://elegantnice.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://elegantnice.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://elegantnice.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<div style="display:none">
+<script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1280380915'%3E%3C/span%3E%3Cscript src='https://v1.cnzz.com/z_stat.php%3Fid%3D1280380915' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+<meta property="og:title" content="linode 服务器延迟测试powershell脚本" />
+<meta property="og:description" content="有个需求需要测试一下linode不同节点的服务器延迟大小，如果每次手工输命令测试，那效率太低。因此做一个简单的脚本 来测试不同节点的网络延迟
+linode speed test
+完整代码如下
+ping speedtest.newark.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.atlanta.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.dallas.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.fremont.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.frankfurt.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.london.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.singapore.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot;  主要功能是 ping 一个主机看 返回延时数据，同时把数据保存到txt文本
+某次测试结果如下：
+正在 Ping speedtest.frankfurt.linode.com [139.162.130.8] 具有 32 字节的数据: 来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52 来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52 来自 139." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://elegantnice.com/posts/2018-3-1-powershell_linode/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-03-01T08:47:11&#43;01:00" />
+<meta property="article:modified_time" content="2018-03-01T08:47:11&#43;01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="linode 服务器延迟测试powershell脚本"/>
+<meta name="twitter:description" content="有个需求需要测试一下linode不同节点的服务器延迟大小，如果每次手工输命令测试，那效率太低。因此做一个简单的脚本 来测试不同节点的网络延迟
+linode speed test
+完整代码如下
+ping speedtest.newark.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.atlanta.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.dallas.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.fremont.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.frankfurt.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.london.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; ping speedtest.singapore.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot;  主要功能是 ping 一个主机看 返回延时数据，同时把数据保存到txt文本
+某次测试结果如下：
+正在 Ping speedtest.frankfurt.linode.com [139.162.130.8] 具有 32 字节的数据: 来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52 来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52 来自 139."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://elegantnice.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "linode 服务器延迟测试powershell脚本",
+      "item": "https://elegantnice.com/posts/2018-3-1-powershell_linode/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "linode 服务器延迟测试powershell脚本",
+  "name": "linode 服务器延迟测试powershell脚本",
+  "description": "有个需求需要测试一下linode不同节点的服务器延迟大小，如果每次手工输命令测试，那效率太低。因此做一个简单的脚本 来测试不同节点的网络延迟\nlinode speed test\n完整代码如下\nping speedtest.newark.linode.com\t-n 10 |Out-File \u0026quot;C:\\linode.txt\u0026quot; ping speedtest.atlanta.linode.com\t-n 10 |Out-File \u0026quot;C:\\linode.txt\u0026quot; ping speedtest.dallas.linode.com\t-n 10 |Out-File \u0026quot;C:\\linode.txt\u0026quot; ping speedtest.fremont.linode.com\t-n 10 |Out-File \u0026quot;C:\\linode.txt\u0026quot; ping speedtest.frankfurt.linode.com\t-n 10 |Out-File \u0026quot;C:\\linode.txt\u0026quot; ping speedtest.london.linode.com\t-n 10 |Out-File \u0026quot;C:\\linode.txt\u0026quot; ping speedtest.singapore.linode.com\t-n 10 |Out-File \u0026quot;C:\\linode.txt\u0026quot;  主要功能是 ping 一个主机看 返回延时数据，同时把数据保存到txt文本\n某次测试结果如下：\n正在 Ping speedtest.frankfurt.linode.com [139.162.130.8] 具有 32 字节的数据: 来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52 来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52 来自 139.",
+  "keywords": [
+    
+  ],
+  "articleBody": "有个需求需要测试一下linode不同节点的服务器延迟大小，如果每次手工输命令测试，那效率太低。因此做一个简单的脚本 来测试不同节点的网络延迟\nlinode speed test\n完整代码如下\nping speedtest.newark.linode.com\t-n 10 |Out-File \"C:\\linode.txt\" ping speedtest.atlanta.linode.com\t-n 10 |Out-File \"C:\\linode.txt\" ping speedtest.dallas.linode.com\t-n 10 |Out-File \"C:\\linode.txt\" ping speedtest.fremont.linode.com\t-n 10 |Out-File \"C:\\linode.txt\" ping speedtest.frankfurt.linode.com\t-n 10 |Out-File \"C:\\linode.txt\" ping speedtest.london.linode.com\t-n 10 |Out-File \"C:\\linode.txt\" ping speedtest.singapore.linode.com\t-n 10 |Out-File \"C:\\linode.txt\"  主要功能是 ping 一个主机看 返回延时数据，同时把数据保存到txt文本\n某次测试结果如下：\n正在 Ping speedtest.frankfurt.linode.com [139.162.130.8] 具有 32 字节的数据: 来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52 来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52 来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52 来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52 请求超时。 来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52 请求超时。 来自 139.162.130.8 的回复: 字节=32 时间=299ms TTL=52 来自 139.162.130.8 的回复: 字节=32 时间=304ms TTL=52 来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52 139.162.130.8 的 Ping 统计信息: 数据包: 已发送 = 10，已接收 = 8，丢失 = 2 (20% 丢失)， 往返行程的估计时间(以毫秒为单位): 最短 = 299ms，最长 = 304ms，平均 = 300ms  单次测试数据结果：\n   区域 主机名 平均延时值     US East newark 123ms   US South atlanta 320ms   US Central dallas 179ms   US West fremont 248ms   Frankfurt frankfurt 300ms   London london 262ms   Singapore singapore 300ms   Tokyo 2, Japan shg1 107ms    ",
+  "wordCount" : "166",
+  "inLanguage": "en",
+  "datePublished": "2018-03-01T08:47:11+01:00",
+  "dateModified": "2018-03-01T08:47:11+01:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://elegantnice.com/posts/2018-3-1-powershell_linode/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "elegant lib",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://elegantnice.com/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+
+
+
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: #1d1e20;
+                --entry: #2e2e33;
+                --primary: rgba(255, 255, 255, 0.84);
+                --secondary: rgba(255, 255, 255, 0.56);
+                --tertiary: rgba(255, 255, 255, 0.16);
+                --content: rgba(255, 255, 255, 0.74);
+                --hljs-bg: #2e2e33;
+                --code-bg: #37383e;
+                --border: #333;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+    </style>
+
+</noscript>
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://elegantnice.com/" accesskey="h" title="elegant lib (Alt + H)">elegant lib</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+                
+            </span>
+        </div>
+        <ul id="menu" onscroll="menu_on_scroll()"></ul>
+    </nav>
+</header>
+
+    <main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+
+    <h1 class="post-title">
+      linode 服务器延迟测试powershell脚本<div class="entry-isdraft"><sup>&nbsp;&nbsp;[draft]</sup></div>
+    </h1>
+    <div class="post-meta">March 1, 2018
+
+
+</div>
+  </header> 
+
+  <div class="post-content">
+<p>有个需求需要测试一下linode不同节点的服务器延迟大小，如果每次手工输命令测试，那效率太低。因此做一个简单的脚本
+来测试不同节点的网络延迟</p>
+<p><a href="https://www.linode.com/speedtest">linode speed test</a></p>
+<p><img loading="lazy" src="/images/posts/powershell/linode.png" alt="Speed test"  />
+</p>
+<p>完整代码如下</p>
+<pre><code>ping  speedtest.newark.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot;
+
+ping speedtest.atlanta.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; 	
+
+ping speedtest.dallas.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot; 	
+
+ping speedtest.fremont.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot;  	
+
+ping speedtest.frankfurt.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot;  
+
+ping speedtest.london.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot;  	
+
+ping speedtest.singapore.linode.com	-n 10 |Out-File &quot;C:\linode.txt&quot;
+</code></pre>
+<p>主要功能是 ping 一个主机看 返回延时数据，同时把数据保存到txt文本</p>
+<p>某次测试结果如下：</p>
+<pre><code>正在 Ping speedtest.frankfurt.linode.com [139.162.130.8] 具有 32 字节的数据:
+来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52
+来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52
+来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52
+来自 139.162.130.8 的回复: 字节=32 时间=301ms TTL=52
+请求超时。
+来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52
+请求超时。
+来自 139.162.130.8 的回复: 字节=32 时间=299ms TTL=52
+来自 139.162.130.8 的回复: 字节=32 时间=304ms TTL=52
+来自 139.162.130.8 的回复: 字节=32 时间=300ms TTL=52
+139.162.130.8 的 Ping 统计信息:
+	数据包: 已发送 = 10，已接收 = 8，丢失 = 2 (20% 丢失)，
+往返行程的估计时间(以毫秒为单位):
+	最短 = 299ms，最长 = 304ms，平均 = 300ms
+</code></pre>
+<p>单次测试数据结果：</p>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th style="text-align:center">主机名</th>
+<th style="text-align:center">平均延时值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>US East</td>
+<td style="text-align:center">newark</td>
+<td style="text-align:center">123ms</td>
+</tr>
+<tr>
+<td>US South</td>
+<td style="text-align:center">atlanta</td>
+<td style="text-align:center">320ms</td>
+</tr>
+<tr>
+<td>US Central</td>
+<td style="text-align:center">dallas</td>
+<td style="text-align:center">179ms</td>
+</tr>
+<tr>
+<td>US West</td>
+<td style="text-align:center">fremont</td>
+<td style="text-align:center">248ms</td>
+</tr>
+<tr>
+<td>Frankfurt</td>
+<td style="text-align:center">frankfurt</td>
+<td style="text-align:center">300ms</td>
+</tr>
+<tr>
+<td>London</td>
+<td style="text-align:center">london</td>
+<td style="text-align:center">262ms</td>
+</tr>
+<tr>
+<td>Singapore</td>
+<td style="text-align:center">singapore</td>
+<td style="text-align:center">300ms</td>
+</tr>
+<tr>
+<td>Tokyo 2, Japan</td>
+<td style="text-align:center">shg1</td>
+<td style="text-align:center">107ms</td>
+</tr>
+</tbody>
+</table>
+<p><img loading="lazy" src="/img/qrcode.png" alt="微信公众号"  />
+</p>
+
+</div>
+  <footer class="post-footer">
+  </footer>
+</article>
+    </main><footer class="footer">
+    <span>&copy; 2021 <a href="https://elegantnice.com/">elegant lib</a></span>
+    <span>&middot;</span>
+    <span>Powered by <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a></span>
+    <span>&middot;</span>
+    <span>Theme <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+
+
+<script defer src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<script>
+    window.onload = function () {
+        if (localStorage.getItem("menu-scroll-position")) {
+            document.getElementById('menu').scrollLeft = localStorage.getItem("menu-scroll-position");
+        }
+    }
+
+    function menu_on_scroll() {
+        localStorage.setItem("menu-scroll-position", document.getElementById('menu').scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+</body>
+
+</html>
