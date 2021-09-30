@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>elegant lib</title>
-    <link>https://elegantnice.com/</link>
+    <link>https://elegantm.github.io/</link>
     <description>Recent content on elegant lib</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Aug 2018 08:47:11 +0100</lastBuildDate><atom:link href="https://elegantnice.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Aug 2018 08:47:11 +0100</lastBuildDate><atom:link href="https://elegantm.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Gin框架入门03--处理简单参数和表格</title>
-      <link>https://elegantnice.com/posts/2018-8-23-gin_querypath/</link>
+      <link>https://elegantm.github.io/posts/2018-8-23-gin_querypath/</link>
       <pubDate>Thu, 23 Aug 2018 08:47:11 +0100</pubDate>
       
-      <guid>https://elegantnice.com/posts/2018-8-23-gin_querypath/</guid>
+      <guid>https://elegantm.github.io/posts/2018-8-23-gin_querypath/</guid>
       <description>package main import ( &amp;#34;fmt&amp;#34; &amp;#34;github.com/gin-gonic/gin&amp;#34; &amp;#34;net/http&amp;#34; ) func main() { fmt.Printf(&amp;#34;launch&amp;#34;) r := gin.Default() r.GET(&amp;#34;/user/:name/*action&amp;#34;, GetParamPath) r.GET(&amp;#34;/welcome&amp;#34;,GetQueryParmeters) r.POST(&amp;#34;/form_post&amp;#34;,Formpost) r.Run(&amp;#34;:9000&amp;#34;) } func GetParamPath(c *gin.Context) { name := c.Param(&amp;#34;name&amp;#34;) action := c.Param(&amp;#34;action&amp;#34;) message := name + &amp;#34; is &amp;#34; + action c.String(http.StatusOK, message) } func GetQueryParmeters(c *gin.Context) { firstname := c.DefaultQuery(&amp;#34;firstname&amp;#34;, &amp;#34;Guest&amp;#34;) lastname := c.Query(&amp;#34;lastname&amp;#34;) // shortcut for c.Request.URL.Query().Get(&amp;#34;lastname&amp;#34;) 	c.String(http.StatusOK, &amp;#34;Hello %s %s&amp;#34;, firstname, lastname) } func Formpost(c *gin.Context) { message := c.</description>
     </item>
     
     <item>
       <title>Gin框架入门02--HTTP常用请求方法示例</title>
-      <link>https://elegantnice.com/posts/2018-8-22-gin_posthead_n2/</link>
+      <link>https://elegantm.github.io/posts/2018-8-22-gin_posthead_n2/</link>
       <pubDate>Wed, 22 Aug 2018 08:47:11 +0100</pubDate>
       
-      <guid>https://elegantnice.com/posts/2018-8-22-gin_posthead_n2/</guid>
+      <guid>https://elegantm.github.io/posts/2018-8-22-gin_posthead_n2/</guid>
       <description>HTTP HTTP协议最常用的方法是Get方法和Post方法，任何一个了解过Web开发的程序员，都耳熟能详，那么还有哪些方法是HTTP协议支持的呢？
   GET 请求获取Request-URI所标识的资源
   POST 在Request-URI所标识的资源后附加新的数据
@@ -36,10 +36,10 @@ package main import ( &amp;#34;github.com/gin-gonic/gin&amp;#34; &amp;#34;net/ht
     
     <item>
       <title>Gin框架入门01--Http请求Body和Header的获取</title>
-      <link>https://elegantnice.com/posts/2018-8-21-gin_httpbody_n1/</link>
+      <link>https://elegantm.github.io/posts/2018-8-21-gin_httpbody_n1/</link>
       <pubDate>Tue, 21 Aug 2018 08:47:11 +0100</pubDate>
       
-      <guid>https://elegantnice.com/posts/2018-8-21-gin_httpbody_n1/</guid>
+      <guid>https://elegantm.github.io/posts/2018-8-21-gin_httpbody_n1/</guid>
       <description>前言 Gin是一个轻量级的Web开发框架，与重量级代表Beego的区别在于，Gin专注于Web 中Http协议处理，数据、表格解析，路由与中间件等，而Beego相对大而全，完整MVC模式，不仅包含了Web协议处理的内容，也包含了数据库的CURD(Beego光数据库的驱动都有三种 mysql/Sqlite/Postgres)
 首先对于Gin框架的安装 简要
 &amp;gt; go get -u github.com/gin-gonic/gin &amp;gt; Gin官方Demo Gin教程的官方入门程序 example.go
@@ -55,10 +55,10 @@ package main import ( &amp;#34;fmt&amp;#34; &amp;#34;github.com/gin-gonic/gin&am
     
     <item>
       <title>轻量级数据库Sqlite3基础使用</title>
-      <link>https://elegantnice.com/posts/2018-3-6-rabbitmq_python_go/</link>
+      <link>https://elegantm.github.io/posts/2018-3-6-rabbitmq_python_go/</link>
       <pubDate>Tue, 06 Mar 2018 08:47:11 +0100</pubDate>
       
-      <guid>https://elegantnice.com/posts/2018-3-6-rabbitmq_python_go/</guid>
+      <guid>https://elegantm.github.io/posts/2018-3-6-rabbitmq_python_go/</guid>
       <description>#前言 本文代码主要参考 RabbitMQ官方demo RabbitMQ Tutorials
 其中发送消息使用 python,接收消息使用go
 基本条件： | 类型|	名称 | 内容	| |:&amp;mdash;: |:&amp;mdash;-:|:&amp;mdash; : | |Operate System|Ubuntu | 16.04| |Message Queue|RabbitMQ| 3.6.15| |MQ Host| http address|192.168.105.132| |MQ User| admin| 123456|
@@ -72,10 +72,10 @@ import pika connection = pika.BlockingConnection(pika.ConnectionParameters(&amp;
     
     <item>
       <title>linode 服务器延迟测试powershell脚本</title>
-      <link>https://elegantnice.com/posts/2018-3-1-powershell_linode/</link>
+      <link>https://elegantm.github.io/posts/2018-3-1-powershell_linode/</link>
       <pubDate>Thu, 01 Mar 2018 08:47:11 +0100</pubDate>
       
-      <guid>https://elegantnice.com/posts/2018-3-1-powershell_linode/</guid>
+      <guid>https://elegantm.github.io/posts/2018-3-1-powershell_linode/</guid>
       <description>有个需求需要测试一下linode不同节点的服务器延迟大小，如果每次手工输命令测试，那效率太低。因此做一个简单的脚本 来测试不同节点的网络延迟
 linode speed test
 完整代码如下
@@ -86,19 +86,19 @@ ping speedtest.newark.linode.com	-n 10 |Out-File &amp;quot;C:\linode.txt&amp;quo
     
     <item>
       <title>QT制作TCPserver完成十六进制数据收发</title>
-      <link>https://elegantnice.com/posts/2018-2-7-qtfortcpserver/</link>
+      <link>https://elegantm.github.io/posts/2018-2-7-qtfortcpserver/</link>
       <pubDate>Mon, 05 Feb 2018 08:47:11 +0100</pubDate>
       
-      <guid>https://elegantnice.com/posts/2018-2-7-qtfortcpserver/</guid>
+      <guid>https://elegantm.github.io/posts/2018-2-7-qtfortcpserver/</guid>
       <description>定时发送固定的十六进制字符串</description>
     </item>
     
     <item>
       <title>轻量级数据库Sqlite3基础使用</title>
-      <link>https://elegantnice.com/posts/2017-9-10-sqlite3demo/</link>
+      <link>https://elegantm.github.io/posts/2017-9-10-sqlite3demo/</link>
       <pubDate>Sun, 20 Nov 2016 08:47:11 +0100</pubDate>
       
-      <guid>https://elegantnice.com/posts/2017-9-10-sqlite3demo/</guid>
+      <guid>https://elegantm.github.io/posts/2017-9-10-sqlite3demo/</guid>
       <description>SQLite3本地数据库 c示例</description>
     </item>
     

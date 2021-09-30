@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>TCPserver on elegant lib</title>
-    <link>https://elegantnice.com/tags/tcpserver/</link>
+    <link>https://elegantm.github.io/tags/tcpserver/</link>
     <description>Recent content in TCPserver on elegant lib</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Feb 2018 08:47:11 +0100</lastBuildDate><atom:link href="https://elegantnice.com/tags/tcpserver/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 05 Feb 2018 08:47:11 +0100</lastBuildDate><atom:link href="https://elegantm.github.io/tags/tcpserver/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>QT制作TCPserver完成十六进制数据收发</title>
-      <link>https://elegantnice.com/posts/2018-2-7-qtfortcpserver/</link>
+      <link>https://elegantm.github.io/posts/2018-2-7-qtfortcpserver/</link>
       <pubDate>Mon, 05 Feb 2018 08:47:11 +0100</pubDate>
       
-      <guid>https://elegantnice.com/posts/2018-2-7-qtfortcpserver/</guid>
+      <guid>https://elegantm.github.io/posts/2018-2-7-qtfortcpserver/</guid>
       <description>定时发送固定的十六进制字符串</description>
     </item>
     
